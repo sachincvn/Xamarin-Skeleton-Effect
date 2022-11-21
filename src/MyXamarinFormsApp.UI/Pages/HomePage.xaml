@@ -23,16 +23,16 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:Student">
                         <Frame HeightRequest="70" HasShadow="False" BorderColor="LightGray" Padding="15"
-                               extension:Skeleton.IsBusy="{Binding IsBusy}" extension:Skeleton.IsParent="True"
+                               extension:Skeleton.IsBusy="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=IsBusy}" extension:Skeleton.IsParent="True"
                                extension:Skeleton.Animation="{extension:DefaultAnimation Source=Fade}">
                             <Grid ColumnDefinitions="Auto, *" HeightRequest="70">
                                 <Frame HasShadow="False" WidthRequest="60" HeightRequest="60" Padding="0"
                                        CornerRadius="30" BorderColor="LightGray" VerticalOptions="Center"
-                                       extension:Skeleton.IsBusy="{Binding IsBusy}" extension:Skeleton.BackgroundColor="LightGray"/>
+                                       extension:Skeleton.IsBusy="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=IsBusy}" extension:Skeleton.BackgroundColor="LightGray"/>
 
                                 <StackLayout VerticalOptions="Center" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,0" Spacing="5">
-                                    <Label Text="{Binding FirstName}"  extension:Skeleton.IsBusy="{Binding IsBusy}" extension:Skeleton.BackgroundColor="LightGray"/>
-                                    <Label Text="{Binding LastName}" extension:Skeleton.IsBusy="{Binding IsBusy}" extension:Skeleton.BackgroundColor="LightGray"/>
+                                    <Label Text="{Binding FirstName}"  extension:Skeleton.IsBusy="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=IsBusy}" extension:Skeleton.BackgroundColor="LightGray"/>
+                                    <Label Text="{Binding LastName}" extension:Skeleton.IsBusy="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=IsBusy}" extension:Skeleton.BackgroundColor="LightGray"/>
                                 </StackLayout>
                             </Grid>
                         </Frame>

@@ -17,14 +17,24 @@ namespace MyXamarinFormsApp.Core.ViewModels.Home
         {
             Students = new ObservableCollection<Student>();
             IsBusy = true;
+
+            InitCollectionView();
         }
 
-        public override async Task Initialize()
+        private async void InitCollectionView()
         {
             for (int i = 0; i < 5; i++)
             {
-                Students.Add(new Student("Sachin", "Chavan", i, "image_placeholder.png",true));
+                Students.Add(new Student("Sachin", "Chavan", i, "image_placeholder.png"));
             }
+            await Task.Delay(5000);
+            Students.Clear();
+            IsBusy = false;
+            for (int i = 0; i < 5; i++)
+            {
+                Students.Add(new Student("Sachin", "Chavan", i, "image_placeholder.png"));
+            }
+
         }
     }
 
@@ -34,15 +44,13 @@ namespace MyXamarinFormsApp.Core.ViewModels.Home
         public string LastName { get; set; }
         public int Id { get; set; }
         public string ImageUrl { get; set; }
-        public bool IsBusy { get; set; }
 
-        public Student(string firstName, string lastName, int id, string imageUrl, bool isBusy)
+        public Student(string firstName, string lastName, int id, string imageUrl)
         {
             FirstName = firstName;
             LastName = lastName;
             Id = id;
             ImageUrl = imageUrl;
-            IsBusy = isBusy;
         }
     }
 }
