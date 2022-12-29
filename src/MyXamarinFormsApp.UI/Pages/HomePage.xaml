@@ -8,12 +8,77 @@
                       xmlns:extension="clr-namespace:Xamarin.Forms.Skeleton;assembly=Xamarin.Forms.Skeleton"
                       NavigationPage.HasNavigationBar="False"
                       x:Class="MyXamarinFormsApp.UI.Pages.HomePage"
+                      xmlns:resource="clr-namespace:MyXamarinFormsApp.UI.Resources"
                       x:DataType="viewModels:HomeViewModel"
-                      xmlns:viewModels="clr-namespace:MyXamarinFormsApp.Core.ViewModels.Home;assembly=MyXamarinFormsApp.Core">
-    <ContentPage.Content>
-        <StackLayout>
+                      xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                      xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+                      xmlns:viewModels="clr-namespace:MyXamarinFormsApp.Core.ViewModels.Home;assembly=MyXamarinFormsApp.Core" xmlns:pcv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:ui="clr-namespace:MyXamarinFormsApp.UI">
 
-            <CollectionView ItemsSource="{Binding Students}" 
+    <ContentPage.Resources>
+        <resource:AppStrings x:Key="AppStrings"/>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <viewModels:HomeViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+
+        <!--<StackLayout VerticalOptions="Center">
+
+            <ui:MarqueeLabelText Text="This is a marquee label." />
+
+            -->
+        <!-- Profile Image-->
+        <!--
+            <Grid IsVisible="True" RowDefinitions="Auto,Auto" Margin="10" Grid.Row="0" BackgroundColor="Yellow" Padding="10">
+                <Slider  x:Name="SliderSongPlayDisplay"   ThumbColor="Red" MaximumTrackColor="Orange" MinimumTrackColor="Orange"/>
+                <Button x:Name="PlayPauseBtn" Text="ssd" Grid.Row="1" Clicked="Button_Clicked"/>
+            </Grid>
+
+            <ListView IsVisible="False" ItemsSource="{Binding AudioFiles}" x:Name="listView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell x:DataType="viewModels:AudioFileViewModel">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding AudioFile.Title}" FontAttributes="Bold" VerticalOptions="Center" />
+                                <Label Text="{Binding AudioFile.Duration}" VerticalOptions="Center" />
+                                <Frame WidthRequest="50" HeightRequest="40" BackgroundColor="Red" Padding="0">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer  Command="{Binding Path=BindingContext.PlayAudioCommand, Source={x:Reference listView}}" CommandParameter="{Binding}"/>
+                                    </Frame.GestureRecognizers>
+                                    <Grid>
+                                        <Label Text="{Binding IsPlaying}" FontSize="14" TextColor="Black"/>
+                                    </Grid>
+                                </Frame>
+                                <Label Text="{Binding DurationString}" VerticalOptions="Center" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+        </StackLayout>-->
+
+
+
+
+        <StackLayout>
+            <!--<Frame HeightRequest="70" HasShadow="False" BorderColor="LightGray" Padding="15"
+                               extension:Skeleton.IsBusy="True" extension:Skeleton.IsParent="True"
+                               extension:Skeleton.Animation="{extension:DefaultAnimation Source=Fade}">
+                <Grid ColumnDefinitions="Auto, *" HeightRequest="70">
+                    <Frame HasShadow="False" WidthRequest="60" HeightRequest="60" Padding="0"
+                                       CornerRadius="30" BorderColor="LightGray" VerticalOptions="Center"
+                                       extension:Skeleton.IsBusy="True" extension:Skeleton.BackgroundColor="LightGray"/>
+
+                    <StackLayout VerticalOptions="Center" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,0" Spacing="5">
+                        <Label Text="Sachin Chavan"  extension:Skeleton.IsBusy="True" extension:Skeleton.BackgroundColor="LightGray"/>
+                        <Label Text="Gharoffice" extension:Skeleton.IsBusy="True" extension:Skeleton.BackgroundColor="LightGray"/>
+                    </StackLayout>
+                </Grid>
+            </Frame>-->
+            <!--<CollectionView ItemsSource="{Binding Students}" 
                             Margin="24,10,24,0"
                             extension:Skeleton.IsParent="True"
                             extension:Skeleton.IsBusy="{Binding IsBusy}">
@@ -38,8 +103,28 @@
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>
+                
+            </CollectionView>-->
 
+            <ui:CustomCollectionView ItemsSource="{Binding Students}">
+                <ui:CustomCollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:Student">
+                        <Grid x:Name="RootView">
+                            <Frame HeightRequest="70" HasShadow="False" BorderColor="LightGray" Padding="15">
+                                <Grid ColumnDefinitions="Auto, *" HeightRequest="70">
+                                    <Frame HasShadow="False" WidthRequest="60" HeightRequest="60" Padding="0"
+                                       CornerRadius="30" BorderColor="LightGray" VerticalOptions="Center"/>
+
+                                    <StackLayout VerticalOptions="Center" Grid.Column="1" Orientation="Vertical" Margin="10,0,0,0" Spacing="5">
+                                        <Label Text="{Binding FirstName}" />
+                                        <Label Text="{Binding LastName}" />
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </ui:CustomCollectionView.ItemTemplate>
+            </ui:CustomCollectionView>
         </StackLayout>
     </ContentPage.Content>
 </views:MvxContentPage>

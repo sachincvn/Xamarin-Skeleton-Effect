@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MediaManager;
 using Xamarin.Forms;
 
 namespace MyXamarinFormsApp.UI
@@ -11,6 +12,7 @@ namespace MyXamarinFormsApp.UI
         public App()
         {
             InitializeComponent();
+            CrossMediaManager.Current.Init();
         }
     }
 }
