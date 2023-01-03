@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using MvvmCross.Commands;
 
 namespace MyXamarinFormsApp.Core.ViewModels.Home
 {
@@ -12,13 +13,21 @@ namespace MyXamarinFormsApp.Core.ViewModels.Home
         public ObservableCollection<Student> Students { get => _students; set => SetProperty(ref _students, value); }
 
         private bool _isBusy;
-        public bool IsBusy { get => _isBusy; set => SetProperty(ref _isBusy, value); }  
+        public bool IsBusy { get => _isBusy; set => SetProperty(ref _isBusy, value); }
+
+        public MvxCommand Command { get; }
         public HomeViewModel()
         {
             Students = new ObservableCollection<Student>();
+            Command = new MvxCommand(ChnageValue);
             IsBusy = true;
 
-            InitCollectionView();
+           // InitCollectionView();
+        }
+
+        private void ChnageValue()
+        {
+            IsBusy = !IsBusy;
         }
 
         private async void InitCollectionView()

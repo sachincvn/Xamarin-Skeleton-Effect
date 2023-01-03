@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using static MvvmCross.Binding.ExpressionParse.MvxParsedExpression;
@@ -9,34 +11,20 @@ namespace MyXamarinFormsApp.UI.Behavior
 {
     public class SkeletonExtension : Behavior<VisualElement>
     {
-        public static readonly BindableProperty ColorProperty =
-    BindableProperty.Create(nameof(Color), typeof(Color), typeof(SkeletonExtension), Color.Default);
+        public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(SkeletonExtension), Color.Default);
 
-        public static readonly BindableProperty ISLoadingProperty =
-            BindableProperty.Create(nameof(IsLoading), typeof(bool), typeof(SkeletonExtension), true);
-
-        private static async void IsLoadingPropertyChnaged(BindableObject bindable, object oldValue, object newValue)
-        {
-            var element = (VisualElement)bindable;
-            if (element != null)
-            {
-                if (newValue is bool boolean && boolean == true)
-                {
-                    element.BackgroundColor = Color.Default;
-                }
-            }
-        }
+        public static readonly BindableProperty ISLoadingProperty = BindableProperty.Create(nameof(IsLoading), typeof(bool), typeof(SkeletonExtension), true, propertyChanged: OnIsLoadingChanged);
 
         public Color Color
         {
-            get { return (Color)GetValue(ColorProperty); }
-            set { SetValue(ColorProperty, value); }
+            get => (Color)GetValue(ColorProperty);
+            set => SetValue(ColorProperty, value);
         }
 
         public bool IsLoading
         {
-            get { return (bool)GetValue(ISLoadingProperty); }
-            set { SetValue(ISLoadingProperty, value); }
+            get => (bool)GetValue(ISLoadingProperty);
+            set => SetValue(ISLoadingProperty, value);
         }
 
 
@@ -51,6 +39,19 @@ namespace MyXamarinFormsApp.UI.Behavior
         {
             element.BindingContextChanged -= OnBindingContextChanged;
             base.OnDetachingFrom(element);
+        }
+
+
+        private static async void OnIsLoadingChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var element = (VisualElement)bindable;
+            if (element != null)
+            {
+                if (newValue is bool boolean && boolean == true)
+                {
+                    element.BackgroundColor = Color.Default;
+                }
+            }
         }
 
         private async void OnBindingContextChanged(object sender, EventArgs e)
@@ -87,6 +88,69 @@ namespace MyXamarinFormsApp.UI.Behavior
             {
                 element.BackgroundColor = Color.Default;
             }
+        }
+    }
+
+    public static class Extensions
+    {
+        public static readonly BindableProperty IsLoadingProperty = BindableProperty.CreateAttached("IsLoading", typeof(bool), typeof(Extensions), default(bool), propertyChanged: OnLoadingEnabledChanged);
+
+        public static void SetIsLoading(BindableObject element, bool value)
+        {
+            element.SetValue(IsLoadingProperty, value);
+        }
+
+        public static bool GetIsLoading(BindableObject element)
+        {
+            return (bool)element.GetValue(IsLoadingProperty);
+        }
+        public static bool IsFading { get; set; }
+
+        private static void OnLoadingEnabledChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (!(bindable is View view) || !(newValue is bool))
+            {
+                return;
+            }
+            IsFading = (bool)view.GetValue(IsLoadingProperty);
+
+            view.BackgroundColor = Color.FromHex("#E4E4E4");
+            Device.StartTimer(TimeSpan.FromSeconds(1.5), () =>
+            {
+                var isFading = IsFading;
+                view.FadeTo(0.5, 750, Easing.CubicInOut).ContinueWith((x) =>
+                {
+                    view.FadeTo(1, 750, Easing.CubicInOut);
+                });
+                return isFading;
+            });
+
+            if (!IsFading)
+            {
+                view.BackgroundColor = Color.Default;
+            }
+        }
+
+        public static readonly BindableProperty BackgroundColorProperty =
+            BindableProperty.CreateAttached("BackgroundColor", typeof(Color), typeof(Extensions), default(Color), propertyChanged: OnBackgroundColorChanged);
+
+        public static void SetBackgroundColor(BindableObject element, Color value)
+        {
+            element.SetValue(BackgroundColorProperty, value);
+        }
+
+        public static Color GetBackgroundColor(BindableObject element)
+        {
+            return (Color)element.GetValue(BackgroundColorProperty);
+        }
+
+        private static void OnBackgroundColorChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (!(bindable is View view))
+            {
+                return;
+            }
+            view.BackgroundColor = (Color)newValue;
         }
     }
 

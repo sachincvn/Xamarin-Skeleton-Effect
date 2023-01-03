@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MvvmCross.Binding.BindingContext;
 using MvvmCross.Forms.Presenters.Attributes;
 using MvvmCross.Forms.Views;
 using MyXamarinFormsApp.Core.ViewModels.Home;
@@ -16,6 +17,9 @@ namespace MyXamarinFormsApp.UI.Pages
     [MvxContentPagePresentation(WrapInNavigationPage = true)]
     public partial class HomePage : MvxContentPage<HomeViewModel>
     {
+        private bool _isLoading;
+        public bool IsLoading { get => _isLoading; set {  if (_isLoading == value) return; _isLoading = value;  }
+        }
         public HomePage()
         {
             InitializeComponent();
@@ -59,6 +63,11 @@ namespace MyXamarinFormsApp.UI.Pages
                 navigationPage.BarTextColor = Color.White;
                 navigationPage.BarBackgroundColor = (Color)Application.Current.Resources["PrimaryColor"];
             }
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            IsLoading = !IsLoading;
         }
     }
 }

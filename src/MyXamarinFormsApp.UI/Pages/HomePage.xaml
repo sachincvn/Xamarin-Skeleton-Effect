@@ -5,97 +5,66 @@
                       xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
                       xmlns:mvx="clr-namespace:MvvmCross.Forms.Bindings;assembly=MvvmCross.Forms"
                       xmlns:local="clr-namespace:MyXamarinFormsApp.UI.Pages"
-                      xmlns:behavior="clr-namespace:MyXamarinFormsApp.UI.Behavior"
+                      xmlns:lr="clr-namespace:MyXamarinFormsApp.UI.Behavior"
+                      xmlns:sk="clr-namespace:Xamarin.Forms.Skeleton;assembly=Xamarin.Forms.Skeleton"
                       NavigationPage.HasNavigationBar="False"
                       x:Class="MyXamarinFormsApp.UI.Pages.HomePage"
                       x:DataType="viewModels:HomeViewModel"
                       xmlns:viewModels="clr-namespace:MyXamarinFormsApp.Core.ViewModels.Home;assembly=MyXamarinFormsApp.Core">
     <ContentPage.Content>
-        <StackLayout>
 
+        <StackLayout Orientation="Vertical">
+
+            <Label Text="Hello" sk:Skeleton.IsBusy="True" sk:Skeleton.BackgroundColor="Black" sk:Skeleton.IsParent="True"/>
+
+            <Label Margin="20" Text="Hello World" x:Name="MyLabel" lr:Extensions.IsLoading="{Binding IsBusy}"/>
+
+
+            <Frame x:Name="TempFrame" HeightRequest="120" BackgroundColor="#292A2B" lr:Extensions.IsLoading="False" HasShadow="False"   Margin="20">
+                
+            </Frame>
+            
+            <Button Text="Click Here" Command="{Binding Command}"/>
             <!-- Todo Bind Text and is Loading Bindable property-->
-            <Frame Margin="20" Padding="10" HasShadow="False" BorderColor="#E4E4E4">
+            <!--<Frame Margin="20" Padding="10" HasShadow="False" BorderColor="#E4E4E4">
+                
                 <Grid RowDefinitions="Auto,Auto,Auto">
 
-                    <Label x:Name="Label1" BackgroundColor="#E4E4E4" >
-                        <Label.Behaviors>
-                            <behavior:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
-                        </Label.Behaviors>
-                    </Label>
-                    <Label x:Name="Label2" Grid.Row="1" BackgroundColor="#E4E4E4" >
-                        <Label.Behaviors>
-                            <behavior:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
-                        </Label.Behaviors>
-                    </Label>
-                    <Label x:Name="Label3" Grid.Row="2" BackgroundColor="#E4E4E4" >
-                        <Label.Behaviors>
-                            <behavior:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
-                        </Label.Behaviors>
-                    </Label>
+                    <Label x:Name="Label1" lr:Extensions.IsLoading="True"/>
+                    <Label x:Name="Label2" Grid.Row="1" lr:Extensions.IsLoading="True" />
+                    <Label x:Name="Label3" Grid.Row="2" lr:Extensions.IsLoading="True" />
 
                 </Grid>
             </Frame>
 
             <Label FontAttributes="Bold" FontSize="18" Margin="20">
                 <Label.Behaviors>
-                    <behavior:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
+                    <lr:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
                 </Label.Behaviors>
             </Label>
 
             <Frame HasShadow="False" BackgroundColor="#E4E4E4" CornerRadius="10" Margin="20,0,20,0" HeightRequest="100" x:Name="Frame1">
                 <Frame.Behaviors>
-                    <behavior:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
+                    <lr:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
                 </Frame.Behaviors>
             </Frame>
 
             <Frame Padding="10" Margin="20" HasShadow="False" BackgroundColor="#292A2B" CornerRadius="6">
                 <Grid ColumnDefinitions="*, Auto" RowSpacing="10">
 
-                    <Label Grid.Row="0" Grid.Column="0" WidthRequest="120" HorizontalOptions="Start">
-                        <Label.Behaviors>
-                            <behavior:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
-                        </Label.Behaviors>
-                    </Label>
-                    <Label Grid.Row="0" Grid.Column="1" HeightRequest="10" WidthRequest="40" HorizontalOptions="End">
-                        <Label.Behaviors>
-                            <behavior:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
-                        </Label.Behaviors>
-                    </Label>
-                    <Label Grid.Row="1" Grid.Column="0" HeightRequest="10" WidthRequest="100" HorizontalOptions="Start">
-                        <Label.Behaviors>
-                            <behavior:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
-                        </Label.Behaviors>
-                    </Label>
-                    <Label WidthRequest="120" Grid.Row="2" HeightRequest="10" HorizontalOptions="Start" Grid.Column="0">
-                        <Label.Behaviors>
-                            <behavior:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
-                        </Label.Behaviors>
-                    </Label>
+                    <Label Grid.Row="0" Grid.Column="0" WidthRequest="120" HorizontalOptions="Start"  lr:Extensions.IsLoading="True"/>
+                    <Label Grid.Row="0" Grid.Column="1" HeightRequest="10" WidthRequest="40" HorizontalOptions="End"  lr:Extensions.IsLoading="True"/>
+                    <Label Grid.Row="1" Grid.Column="0" HeightRequest="10" WidthRequest="100" HorizontalOptions="Start"  lr:Extensions.IsLoading="True"/>
+                    <Label WidthRequest="120" Grid.Row="2" HeightRequest="10" HorizontalOptions="Start" Grid.Column="0"  lr:Extensions.IsLoading="True"/>
 
 
-                    <Label Grid.Row="4" Grid.Column="0" HeightRequest="10" WidthRequest="120" HorizontalOptions="Start">
-                        <Label.Behaviors>
-                            <behavior:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
-                        </Label.Behaviors>
-                    </Label>
-                    <Label Grid.Row="4" Grid.Column="1" HeightRequest="10" WidthRequest="40" HorizontalOptions="End">
-                        <Label.Behaviors>
-                            <behavior:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
-                        </Label.Behaviors>
-                    </Label>
-                    <Label Grid.Row="5" Grid.Column="0" HeightRequest="10" WidthRequest="100" HorizontalOptions="Start">
-                        <Label.Behaviors>
-                            <behavior:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
-                        </Label.Behaviors>
-                    </Label>
-                    <Label WidthRequest="120" Grid.Row="6" HeightRequest="10" HorizontalOptions="Start" Grid.Column="0">
-                        <Label.Behaviors>
-                            <behavior:SkeletonExtension Color="#E4E4E4" IsLoading="True"/>
-                        </Label.Behaviors>
-                    </Label>
+                    <Label Grid.Row="4" Grid.Column="0" HeightRequest="10" WidthRequest="120" HorizontalOptions="Start"  lr:Extensions.IsLoading="True"/>
+                    <Label Grid.Row="4" Grid.Column="1" HeightRequest="10" WidthRequest="40" HorizontalOptions="End"  lr:Extensions.IsLoading="True"/>
+                    <Label Grid.Row="5" Grid.Column="0" HeightRequest="10" WidthRequest="100" HorizontalOptions="Start"  lr:Extensions.IsLoading="True"/>
+                    <Label WidthRequest="120" Grid.Row="6" HeightRequest="10" HorizontalOptions="Start" Grid.Column="0"  lr:Extensions.IsLoading="True"/>
 
                 </Grid>
-            </Frame>
+            </Frame>-->
 
           
         </StackLayout>
